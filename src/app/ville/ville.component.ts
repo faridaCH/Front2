@@ -64,7 +64,7 @@ export class VilleComponent implements OnInit {
   }
 
   submitCity(){
-    if( this.ville.id == 0 ){ // Ajout
+    if( this.ville.id == undefined ){ // Ajout
       this.http.post( "http://localhost:8080/api/ville" , this.ville ,this.httpOptions ).subscribe(
         data => { 
           this.closebuttonelement.nativeElement.click(); 
