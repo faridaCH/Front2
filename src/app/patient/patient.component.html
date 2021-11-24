@@ -1,0 +1,37 @@
+<main class="container">
+
+    <h1>Liste des patients</h1>
+
+    <a href="/patient/add" class="btn btn-primary">Ajouter un patient</a>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom complet</th>
+                <th>Email</th>
+                <th>Téléphone</th>
+                <th>Ville - Pays</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr *ngFor="let patient of patients">
+                <td>{{ patient.id }}</td>
+                <td>{{ patient.prenom }} {{ patient.nom }}</td>
+                <td>{{ patient.email }}</td>
+                <td>{{ patient.telephone }}</td>
+                <td>{{ patient.ville?.nom }} - {{ patient.ville?.pays }}</td>
+                <td>
+                    <a class="btn btn-secondary btn-sm"><i
+                        class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                    <button class="btn btn-danger btn-sm ms-3"><i class="fa fa-trash-o"
+                                                                                                 aria-hidden="true"></i>
+                </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+</main>
