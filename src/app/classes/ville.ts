@@ -1,4 +1,4 @@
-export default class Ville {
+export class Ville {
 
     id ?: number
     nom ?: string

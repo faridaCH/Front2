@@ -1,4 +1,4 @@
-import Ville from "./ville"
+import { Ville } from "./ville"
 
 
 export class Patient {

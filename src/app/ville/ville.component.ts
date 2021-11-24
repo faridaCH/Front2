@@ -1,9 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import Ville from '../classes/ville';
+import { Ville } from '../classes/ville';
 import { httpOptions } from '../variables';
-
+ 
 @Component({
   selector: 'app-ville',
   templateUrl: './ville.component.html',
@@ -17,7 +17,7 @@ export class VilleComponent implements OnInit {
   @ViewChild('closebutton') closebuttonelement:any; 
 
   constructor( private http : HttpClient ) {
-  }
+  } 
 
   ngOnInit(): void {
     this.reloadCities(); 
