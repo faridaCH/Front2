@@ -2,9 +2,7 @@
 
 /* ~ = node modules */
 
-
-/* @import "~font-awesome/css/font-awesome.min.css"; */
-
+@import "~font-awesome/css/font-awesome.min.css";
 body {
     padding-bottom: 50px
 }
