@@ -8,6 +8,20 @@
 
     <h1 class="my-4">Liste des villes</h1>
 
+    <form method="get" (submit)="reloadCities()">
+        <div class="row my-4">
+            <div class="col-4">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" name="search" placeholder="Rechercher" [(ngModel)]="search" aria-describedby="button-addon2">
+                    <button class="btn btn-outline-secondary" type="submit" id="button-addon2"><i class="fa fa-search" aria-hidden="true"></i></button>
+                </div>
+            </div>
+            <div class="col-4">
+                <button type="submit" class="btn btn-primary">Rechercher</button>
+            </div>
+        </div>
+    </form>
+
     <table class="table table-striped">
         <thead>
             <tr>

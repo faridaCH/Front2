@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Ville } from '../classes/ville';
+import { VilleService } from '../services/ville.service';
 import { httpOptions } from '../variables';
  
 @Component({
@@ -13,10 +14,11 @@ export class VilleComponent implements OnInit {
 
   villes : Array<Ville> = []; 
   ville : Ville = new Ville(); 
+  search : string = ""
 
   @ViewChild('closebutton') closebuttonelement:any; 
 
-  constructor( private http : HttpClient ) {
+  constructor( private vs : VilleService ) {
   } 
 
   ngOnInit(): void {
@@ -24,8 +26,9 @@ export class VilleComponent implements OnInit {
   } 
 
   reloadCities():void{
+    console.log( "search == " + this.search ); 
     this.villes = []; 
-    this.http.get<Ville[]>( environment.backendUri + "ville" , httpOptions ).subscribe(
+    this.vs.getAll( this.search ).subscribe(
       data => { this.villes = data }
       //, err => console.log( "Une erreur est survenue" )
     );
@@ -43,7 +46,7 @@ export class VilleComponent implements OnInit {
   delete( id : number | undefined ):void{
 
     if( confirm("Êtes vous sur ?") ){
-      this.http.delete( environment.backendUri + "ville/"+id ,httpOptions ).subscribe(
+      this.vs.delete( id ).subscribe(
         data => { 
           this.reloadCities(); 
         }
@@ -53,7 +56,7 @@ export class VilleComponent implements OnInit {
   }
 
   edit( id ?: number ){
-    this.http.get<Ville>( environment.backendUri + "ville/"+id , httpOptions ).subscribe(
+    this.vs.getById( id ).subscribe(
       data => { this.ville = data }
       //, err => console.log( "Une erreur est survenue" )
     );
@@ -61,14 +64,14 @@ export class VilleComponent implements OnInit {
 
   submitCity(){
     if( this.ville.id == undefined ){ // Ajout
-      this.http.post( environment.backendUri + "ville" , this.ville ,httpOptions ).subscribe(
+      this.vs.add( this.ville ).subscribe(
         data => { 
           this.closebuttonelement.nativeElement.click(); 
           this.reloadCities();  }
         //, err => console.log( "Une erreur est survenue" )
       );
     }else{ // Edition
-      this.http.put( environment.backendUri + "ville/"+this.ville.id , this.ville ,httpOptions ).subscribe(
+      this.vs.update( this.ville ).subscribe(
         data => { 
           this.closebuttonelement.nativeElement.click(); 
           this.reloadCities();  }
