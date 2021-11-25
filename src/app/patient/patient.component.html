@@ -3,6 +3,20 @@
     <h1>Liste des patients</h1>
     <button data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-primary" (click)="reset()">Ajouter un patient</button>
 
+    <form method="get" (submit)="reloadPatients()">
+        <div class="row my-4">
+            <div class="col-4">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" name="search" placeholder="Rechercher" [(ngModel)]="search" aria-describedby="button-addon2">
+                    <button class="btn btn-outline-secondary" type="submit" id="button-addon2"><i class="fa fa-search" aria-hidden="true"></i></button>
+                </div>
+            </div>
+            <div class="col-4">
+                <button type="submit" class="btn btn-primary">Rechercher</button>
+            </div>
+        </div>
+    </form>
+
     <table class="table table-striped">
         <thead>
             <tr>
@@ -45,8 +59,9 @@
                 <button type="button" #closebutton class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form ngNativeValidate (submit)="submitPatient()">
-                {{ patient | json }}
                 <div class="modal-body">
+
+                    <div class="alert alert-danger" *ngIf="errorMessage.length > 0">{{errorMessage}}</div>
                     <div class="form-line mb-4">
                         <label class="form-label">Prénom *</label>
                         <input class="form-control" minlength="2" type="text" name="prenom" placeholder="Prénom" [(ngModel)]="patient.prenom" required>

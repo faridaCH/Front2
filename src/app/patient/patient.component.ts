@@ -1,8 +1,11 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Patient } from '../classes/patient';
 import { Ville } from '../classes/ville';
+import { PatientService } from '../services/patient.service';
+import { VilleService } from '../services/ville.service';
 import { httpOptions } from '../variables';
 
 @Component({
@@ -12,70 +15,76 @@ import { httpOptions } from '../variables';
 })
 export class PatientComponent implements OnInit {
 
-  patient : Patient = new Patient(); 
-  patients : Array<Patient> = []; 
-  villes : Array<Ville> = []; 
-  @ViewChild('closebutton') closebuttonelement:any; 
+  patient: Patient = new Patient()
+  patients: Array<Patient> = []
+  villes: Array<Ville> = []
+  search: string = ""
+  errorMessage: string = ""
 
-  constructor( private http : HttpClient ) {
+  @ViewChild('closebutton') closebuttonelement: any;
+
+  constructor(private vs: VilleService, private ps: PatientService) {
   }
 
   ngOnInit(): void {
     this.reloadPatients()
 
-    this.http.get<Patient[]>( environment.backendUri + "ville" , httpOptions ).subscribe(
-      data => { this.villes = data }
-      //, err => console.log( "Une erreur est survenue" )
-    );
-    
+    this.vs.getAll().subscribe({
+      next: (data) => { this.villes = data },
+      error: (err) => { console.log(err.error.message) }
+    });
   }
 
-  reloadPatients(){
-    this.http.get<Patient[]>( environment.backendUri + "patient" , httpOptions ).subscribe(
+  reloadPatients() {
+    this.ps.getAll(this.search).subscribe(
       data => { this.patients = data }
       //, err => console.log( "Une erreur est survenue" )
     );
   }
 
-  reset():void{
-    this.patient = new Patient(); 
+  reset(): void {
+    this.errorMessage = "";
+    this.patient = new Patient();
   }
 
-  submitPatient(): void{
-    if( this.patient.id == undefined ){ // Ajout
-      this.http.post( environment.backendUri + "patient" , this.patient ,httpOptions ).subscribe(
-        data => { 
-          this.closebuttonelement.nativeElement.click(); 
-          this.reloadPatients();  }
-        //, err => console.log( "Une erreur est survenue" )
-      );
-    }else{ // Edition
-      this.http.put( environment.backendUri + "patient/"+this.patient.id , this.patient ,httpOptions ).subscribe(
-        data => { 
-          this.closebuttonelement.nativeElement.click(); 
-          this.reloadPatients();  }
-        //, err => console.log( "Une erreur est survenue" )
-      );
+  submitPatient(): void {
+    let obs: Observable<any>;
+    if (this.patient.id == undefined) { // Ajout
+      obs = this.ps.add(this.patient);
+    } else { // Edition
+      obs = this.ps.update(this.patient);
     }
+
+    obs.subscribe(
+      {
+        next: () => {
+          this.reloadPatients();
+          this.closebuttonelement.nativeElement.click();
+        },
+        error: (err) => {
+          this.errorMessage = err.error.message;
+        }
+      }
+    );
   }
 
-  checkVille( v1 : Ville, v2 : Ville ) : boolean{
-    return v1 != undefined && v2!=undefined && v1.id == v2.id; 
+  checkVille(v1: Ville, v2: Ville): boolean {
+    return v1 != undefined && v2 != undefined && v1.id == v2.id;
   }
 
-  edit( id ?: number ){
-    this.http.get<Patient>( environment.backendUri + "patient/"+id , httpOptions ).subscribe(
+  edit(id?: number) {
+    this.ps.getById(id).subscribe(
       data => { this.patient = data }
       //, err => console.log( "Une erreur est survenue" )
     );
   }
 
-  delete( id : number | undefined ):void{
+  delete(id: number | undefined): void {
 
-    if( confirm("Êtes vous sur ?") ){
-      this.http.delete( environment.backendUri + "patient/"+id ,httpOptions ).subscribe(
-        data => { 
-          this.reloadPatients(); 
+    if (confirm("Êtes vous sur ?")) {
+      this.ps.delete(id).subscribe(
+        data => {
+          this.reloadPatients();
         }
         //, err => console.log( "Une erreur est survenue" )
       );
