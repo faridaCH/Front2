@@ -20,6 +20,7 @@ export class PatientComponent implements OnInit {
   villes: Array<Ville> = []
   search: string = ""
   errorMessage: string = ""
+  success: boolean = false
 
   @ViewChild('closebutton') closebuttonelement: any;
 
@@ -60,6 +61,10 @@ export class PatientComponent implements OnInit {
         next: () => {
           this.reloadPatients();
           this.closebuttonelement.nativeElement.click();
+          this.success = true;
+          setTimeout(() => {                           // <<<---using ()=> syntax
+            this.success = false;
+          }, 5000);
         },
         error: (err) => {
           this.errorMessage = err.error.message;
