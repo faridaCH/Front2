@@ -24,7 +24,9 @@
         </div>
     </form>
 
-    <table class="table table-striped">
+    <div class="alert alert-info" *ngIf="villes.length == 0">Aucune ville trouvée</div>
+
+    <table class="table table-striped" *ngIf="villes.length > 0">
         <thead>
             <tr>
                 <th>Id</th>

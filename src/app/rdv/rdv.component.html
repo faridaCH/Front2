@@ -1,0 +1,52 @@
+<main class="container">
+
+    <div class="alert alert-success" *ngIf="success">Opération effectuée avec succès</div>
+
+    <h1>Liste des Rdv</h1>
+    <button class="btn btn-primary" [routerLink]="['addedit' , 0 ]">Ajouter un Rdv</button>
+
+    <form method="get" (submit)="reload()">
+        <div class="row my-4">
+            <div class="col-4">
+                <div class="input-group mb-3">
+
+                    <button class="btn btn-outline-secondary" type="submit" id="button-addon2"><i class="fa fa-search" aria-hidden="true"></i></button>
+                </div>
+            </div>
+            <div class="col-4">
+                <button type="submit" class="btn btn-primary">Rechercher</button>
+            </div>
+        </div>
+    </form>
+
+    <div class="alert alert-info" *ngIf="rdvs.length == 0">Aucun Rdv trouvé</div>
+
+    <table class="table table-striped" *ngIf="rdvs.length > 0">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom complet</th>
+                <th>Date heure</th>
+                <th>Type</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr *ngFor="let rdv of rdvs">
+                <td>{{ rdv.id }}</td>
+                <td>{{ rdv.patient?.prenom }} {{ rdv.patient?.nom }}</td>
+                <td>{{ rdv.dateheure | date:'dd/MM/yyyy HH:mm' }}</td>
+                <td>{{ rdv.type }}</td>
+                <td>
+                    <a class="btn btn-secondary btn-sm" [routerLink]="['addedit' , rdv.id ]"><i
+                        class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                    <button class="btn btn-danger btn-sm ms-3" (click)="delete(rdv.id)"><i class="fa fa-trash-o"
+                                                                                                 aria-hidden="true"></i>
+                </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+</main>
