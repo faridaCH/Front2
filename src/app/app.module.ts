@@ -11,6 +11,7 @@ import { PatientComponent } from './patient/patient.component';
 import { FormsModule } from '@angular/forms';
 import { RdvComponent } from './rdv/rdv.component';
 import { RdvDetailsComponent } from './rdv/rdv-details/rdv-details.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { RdvDetailsComponent } from './rdv/rdv-details/rdv-details.component';
     VilleComponent,
     PatientComponent,
     RdvComponent,
-    RdvDetailsComponent
+    RdvDetailsComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
