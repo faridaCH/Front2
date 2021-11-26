@@ -14,9 +14,14 @@ export class RdvService {
 
   }
 
-  getAll( s ?: string ) : Observable<Rdv[]> {
-    return this.http.get<Rdv[]>( environment.backendUri + "rdv" 
-    + ( s == undefined ? "" : "?search=" + s )
+  getAll( datesearch ?: Date , idpatient ?: number ) : Observable<Rdv[]> {
+    console.log( environment.backendUri + "rdv?" 
+    + ( datesearch == undefined ? "" : "&datesearch=" + datesearch )
+    + ( idpatient == undefined ? "" : "&patient=" + idpatient ) );
+
+    return this.http.get<Rdv[]>( environment.backendUri + "rdv?" 
+    + ( datesearch == undefined || (""+datesearch).length != 10 ? "" : "&datesearch=" + datesearch )
+    + ( idpatient == undefined || (""+idpatient) == "" || idpatient == 0 ? "" : "&patient=" + idpatient )
     , httpOptions ); 
   }
 

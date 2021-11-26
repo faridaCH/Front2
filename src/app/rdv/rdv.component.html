@@ -3,18 +3,28 @@
     <div class="alert alert-success" *ngIf="success">Opération effectuée avec succès</div>
 
     <h1>Liste des Rdv</h1>
-    <button class="btn btn-primary" [routerLink]="['addedit' , 0 ]">Ajouter un Rdv</button>
 
+    <div>
+        {{ patientRecherche | json }} -- {{ datesearch | json }}
+    </div>
     <form method="get" (submit)="reload()">
         <div class="row my-4">
             <div class="col-4">
-                <div class="input-group mb-3">
-
-                    <button class="btn btn-outline-secondary" type="submit" id="button-addon2"><i class="fa fa-search" aria-hidden="true"></i></button>
-                </div>
+                <select name="patient" id="patient" required class="form-select" [(ngModel)]="patientRecherche">
+                    <option value="">Sélectionner un patient</option>
+                    <option *ngFor="let patient of patients" [ngValue]="patient.id">
+                        {{patient.prenom}} {{patient.nom}}
+                    </option>
+                </select>
             </div>
-            <div class="col-4">
+            <div class="col-3">
+                <input type="date" name="datesearch" [(ngModel)]="datesearch" class="form-control">
+            </div>
+            <div class="col-3">
                 <button type="submit" class="btn btn-primary">Rechercher</button>
+            </div>
+            <div class="col-2">
+                <button class="btn btn-primary" [routerLink]="['addedit' , 0 ]">Ajouter un Rdv</button>
             </div>
         </div>
     </form>

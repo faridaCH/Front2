@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Patient } from 'src/app/classes/patient';
 import { Rdv } from 'src/app/classes/rdv';
@@ -17,7 +17,8 @@ export class RdvDetailsComponent implements OnInit {
   rdv : Rdv = new Rdv();
   errorMessage = ""
 
-  constructor( private rdvService : RdvService ,  private ps : PatientService , private aRoute : ActivatedRoute ) { 
+  constructor( private rdvService : RdvService ,  private ps : PatientService 
+    , private aRoute : ActivatedRoute , private router : Router ) { 
     let rdvId = Number( this.aRoute.snapshot.paramMap.get('id') ); 
     if( rdvId > 0 ){
       this.rdvService.getById( rdvId ).subscribe(
@@ -48,8 +49,7 @@ export class RdvDetailsComponent implements OnInit {
     obs.subscribe(
       {
         next: () => {
-          // TODO
-          //window.location.href = "/"; 
+          this.router.navigate(["rdv"])
         },
         error: (err) => {
           this.errorMessage = err.error.message;
