@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
 import { User } from './classes/user';
+import { FooterComponent } from './footer/footer.component';
 
 // ng g g auth
 
@@ -10,7 +11,7 @@ import { User } from './classes/user';
 })
 export class AuthGuard implements CanActivate, CanActivateChild {
 
-  constructor( private router : Router ){}
+  constructor( private router : Router  ){}
 
   canActivate(
     route: ActivatedRouteSnapshot,
@@ -38,19 +39,23 @@ export class AuthGuard implements CanActivate, CanActivateChild {
   getUserFullname() : string | undefined{
     let user : User; 
     let ss = sessionStorage.getItem("user")
-    console.log( ss )
     if( ss != null ){
       user = JSON.parse(ss);
 
-      console.log( user )
       return user.name; 
     }else{
       return ""; 
     }
+  }
 
-
-
-    
+  getUser() : User{
+    let user : User; 
+    let ss = sessionStorage.getItem("user")
+    if( ss != null ){
+      user = JSON.parse(ss);
+      return user; 
+    }
+    return new User(); 
   }
 
 }
