@@ -21,9 +21,14 @@ export class LoginComponent implements OnInit {
 
   authenticate(){
     let u = {"username" : this.username , "password" : this.password }
+    
+    // http://localhost:8080/api/login
     this.http.post( environment.backendUri + "login" , u  ,httpOptions ).subscribe(
       {
-        next: (data) => { sessionStorage.setItem("connected" , "1" ); this.router.navigate(['patient'])  },
+        next: (data) => { 
+          sessionStorage.setItem("connected" , "1" ); 
+          this.router.navigate(['patient'])  
+        },
         error: (err) => { console.log(err.error.message) }
       }
     )
