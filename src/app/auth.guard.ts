@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
+import { User } from './classes/user';
 
 // ng g g auth
 
@@ -28,6 +29,28 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     childRoute: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     return true;
+  }
+
+  isConnected():boolean{
+    return sessionStorage.getItem("connected") != null; 
+  }
+
+  getUserFullname() : string | undefined{
+    let user : User; 
+    let ss = sessionStorage.getItem("user")
+    console.log( ss )
+    if( ss != null ){
+      user = JSON.parse(ss);
+
+      console.log( user )
+      return user.name; 
+    }else{
+      return ""; 
+    }
+
+
+
+    
   }
 
 }
