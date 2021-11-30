@@ -15,6 +15,7 @@ import { httpOptions } from '../variables';
 export class FooterComponent implements OnInit {
 
   @ViewChild('fileInput') inputEl: ElementRef | undefined;
+  @ViewChild('closebutton') closebuttonelement: any;
 
 
   constructor(private guard: AuthGuard, private http: HttpClient, public app: AppComponent) { }
@@ -23,7 +24,12 @@ export class FooterComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    this.app.user = this.guard.getUser();
+    try{
+      this.app.user = this.guard.getUser();
+    }catch( e ){
+      this.app.user = new User(); 
+    }
+    
   }
 
   submit() {
@@ -62,6 +68,7 @@ export class FooterComponent implements OnInit {
             //this.app.user = data
             sessionStorage.setItem("user" , JSON.stringify(data) )
             this.ngAfterViewInit()
+            this.closebuttonelement.nativeElement.click();
           },
           error: (err) => { console.log(err.error.message) }
         }

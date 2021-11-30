@@ -2,19 +2,14 @@
 
     <div class="text-center fixed-bottom bg-light p-3">
         &copy; 2021 : Formation M2I POE
-
-        <button (click)="ngAfterViewInit()">éééééééééééé</button>
-
     </div>
-
-
 
     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="staticBackdropLabel">Editer mon profil</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" #closebutton class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form name="" method="post" enctype="multipart/form-data" (submit)="submit()">
                     <div class="modal-body">
