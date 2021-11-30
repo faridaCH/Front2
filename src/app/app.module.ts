@@ -12,6 +12,7 @@ import { FormsModule } from '@angular/forms';
 import { RdvComponent } from './rdv/rdv.component';
 import { RdvDetailsComponent } from './rdv/rdv-details/rdv-details.component';
 import { LoginComponent } from './login/login.component';
+import { VilleDetailsComponent } from './ville-details/ville-details.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { LoginComponent } from './login/login.component';
     PatientComponent,
     RdvComponent,
     RdvDetailsComponent,
-    LoginComponent
+    LoginComponent,
+    VilleDetailsComponent
   ],
   imports: [
     BrowserModule,
