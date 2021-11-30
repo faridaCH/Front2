@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Ville } from '../classes/ville';
 import { VilleService } from '../services/ville.service';
-import { httpOptions } from '../variables';
 
 @Component({
   selector: 'app-ville',

@@ -5,7 +5,7 @@ import { environment } from 'src/environments/environment';
 import { AppComponent } from '../app.component';
 import { AuthGuard } from '../auth.guard';
 import { User } from '../classes/user';
-import { httpOptions } from '../variables';
+import { ConfigService } from '../services/config.service';
 
 @Component({
   selector: 'app-footer',
@@ -18,17 +18,14 @@ export class FooterComponent implements OnInit {
   @ViewChild('closebutton') closebuttonelement: any;
 
 
-  constructor(private guard: AuthGuard, private http: HttpClient, public app: AppComponent) { }
+  constructor(private guard: AuthGuard, private http: HttpClient, public app: AppComponent, private config: ConfigService ) { this.app.user = new User() }
 
+  
   ngOnInit(): void {
+    this.app.user = this.guard.getUser();
   }
 
   ngAfterViewInit() {
-    try{
-      this.app.user = this.guard.getUser();
-    }catch( e ){
-      this.app.user = new User(); 
-    }
     
   }
 
@@ -59,7 +56,7 @@ export class FooterComponent implements OnInit {
       console.log("before req");
       console.log(this.app.user);
 
-      this.http.put<User>(environment.backendUri + "profil/" + user.id, formData, httpOptions).subscribe(
+      this.http.put<User>(environment.backendUri + "profil/" + user.id, formData, this.config.httpOptions ).subscribe(
         {
           next: (data) => {
             console.log("in req");

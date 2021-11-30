@@ -2,16 +2,17 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { AppComponent } from '../app.component';
 import { Patient } from '../classes/patient';
 import { Ville } from '../classes/ville';
 import { PatientService } from '../services/patient.service';
 import { VilleService } from '../services/ville.service';
-import { httpOptions } from '../variables';
 
 @Component({
   selector: 'app-patient',
   templateUrl: './patient.component.html',
-  styleUrls: ['./patient.component.css']
+  styleUrls: ['./patient.component.css'],
+  providers:[AppComponent]
 })
 export class PatientComponent implements OnInit {
 

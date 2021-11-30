@@ -4,8 +4,7 @@
 
 export const environment = {
   production: false,
-  backendUri : "http://localhost:8080/api/",
-  authorization : "Basic YWRtaW46MTIzNA=="
+  backendUri : "http://localhost:8080/api/"
 };
 
 /*

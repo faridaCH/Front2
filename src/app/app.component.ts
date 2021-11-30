@@ -1,3 +1,4 @@
+import { HttpHeaders } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { User } from './classes/user';
 
@@ -12,6 +13,7 @@ export class AppComponent {
 
   user: User = new User();
 
+  
   
 
 }
