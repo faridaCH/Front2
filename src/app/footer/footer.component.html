@@ -2,7 +2,12 @@
 
     <div class="text-center fixed-bottom bg-light p-3">
         &copy; 2021 : Formation M2I POE
+
+        <button (click)="ngAfterViewInit()">éééééééééééé</button>
+
     </div>
+
+
 
     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -11,29 +16,28 @@
                     <h5 class="modal-title" id="staticBackdropLabel">Editer mon profil</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <button (click)="update()">Maj</button>
                 <form name="" method="post" enctype="multipart/form-data" (submit)="submit()">
                     <div class="modal-body">
 
                         <div class="mb-5">
                             <div class="form-line mb-4">
                                 <label class="form-label">Nom complet *</label>
-                                <input class="form-control" type="text" name="tata" placeholder="Votre nom" required [(ngModel)]="user.name">
+                                <input class="form-control" type="text" name="tata" placeholder="Votre nom" required [(ngModel)]="app.user.name">
                             </div>
 
                             <div class="form-line mb-4">
                                 <label class="form-label">Email *</label>
-                                <input class="form-control" type="text" name="email" placeholder="Votre email" required [(ngModel)]="user.email">
+                                <input class="form-control" type="text" name="email" placeholder="Votre email" required [(ngModel)]="app.user.email">
                             </div>
 
                             <div class="form-line mb-4">
                                 <label class="form-label">Nom d'utilisateur *</label>
-                                <input class="form-control" type="text" name="username" placeholder="Votre nom d'utilisateur" required [(ngModel)]="user.username">
+                                <input class="form-control" type="text" name="username" placeholder="Votre nom d'utilisateur" required [(ngModel)]="app.user.username">
                             </div>
 
                             <div class="form-line mb-4">
                                 <label class="form-label">Mot de passe *</label>
-                                <input class="form-control" type="password" name="password" placeholder="Votre mot de passe" [(ngModel)]="user.password">
+                                <input class="form-control" type="password" name="password" placeholder="Votre mot de passe" [(ngModel)]="app.user.password">
                             </div>
                         </div>
 
