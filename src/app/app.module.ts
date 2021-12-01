@@ -14,6 +14,7 @@ import { RdvDetailsComponent } from './rdv/rdv-details/rdv-details.component';
 import { LoginComponent } from './login/login.component';
 import { VilleDetailsComponent } from './ville-details/ville-details.component';
 import { ConfigService } from './services/config.service';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { ConfigService } from './services/config.service';
     RdvComponent,
     RdvDetailsComponent,
     LoginComponent,
-    VilleDetailsComponent
+    VilleDetailsComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,

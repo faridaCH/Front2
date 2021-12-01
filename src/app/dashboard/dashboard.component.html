@@ -1,0 +1,11 @@
+<main class="container">
+    <ng-container *ngTemplateOutlet="greet"></ng-container>
+
+    <hr>
+    <ng-container *ngTemplateOutlet="svk; context: myContext"></ng-container>
+</main>
+
+<ng-template #greet><span>Hello</span></ng-template>
+
+
+<ng-template #svk let-person="localSk"><span>Ahoj {{person}}!</span></ng-template>
