@@ -24,34 +24,51 @@
         </div>
     </form>
 
-    <div class="alert alert-info" *ngIf="villes.length == 0">Aucune ville trouvée</div>
 
-    <table class="table table-striped" *ngIf="villes.length > 0">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nom</th>
-                <th>Code Postal</th>
-                <th>Pays</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
+    <ng-container *ngIf="VilleState$ | async as state" [ngSwitch]="state.dataState">
+        {{ state | json }} {{ VilleState | json }}
+        <ng-container *ngSwitchCase="villeStateEnum.INITIAL">
+            <div class="p-2"> Initial State</div>
+        </ng-container>
+        <ng-container *ngSwitchCase="villeStateEnum.LOADING">
+            <div class="p-2"> Loading...</div>
+        </ng-container>
+        <ng-container *ngSwitchCase="villeStateEnum.ERROR">
+            <div class="p-2 text-danger"> {{state.errorMessage |json}}</div>
+        </ng-container>
+        <ng-container *ngSwitchCase="villeStateEnum.LOADED" class="p-4">
 
-        <tbody>
-            <tr *ngFor="let ville of villes">
-                <td>{{ ville.id }}</td>
-                <td>{{ ville.nom }}</td>
-                <td>{{ ville.codePostal }}</td>
-                <td>{{ ville.pays }}</td>
-                <td>
-                    <a data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="edit(ville.id)" class="btn btn-secondary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-                    <button class="btn btn-danger btn-sm ms-3" (click)="delete( ville.id )">
-                        <i class="fa fa-trash-o" aria-hidden="true"></i>
-                    </button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+            <table class="table table-striped" *ngIf="villes.length > 0">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Nom</th>
+                        <th>Code Postal</th>
+                        <th>Pays</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr *ngFor="let ville of state.villes">
+                        <td>{{ ville.id }}</td>
+                        <td>{{ ville.nom }}</td>
+                        <td>{{ ville.codePostal }}</td>
+                        <td>{{ ville.pays }}</td>
+                        <td>
+                            <a data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="edit(ville.id)" class="btn btn-secondary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                            <button class="btn btn-danger btn-sm ms-3" (click)="delete( ville.id )">
+                                <i class="fa fa-trash-o" aria-hidden="true"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </ng-container>
+    </ng-container>
+
+
 
 </main>
 

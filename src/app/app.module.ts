@@ -15,6 +15,11 @@ import { LoginComponent } from './login/login.component';
 import { VilleDetailsComponent } from './ville-details/ville-details.component';
 import { ConfigService } from './services/config.service';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { StoreModule } from '@ngrx/store';
+import { VilleReducer } from './ngrx/villes.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { VilleEffects } from './ngrx/villes.effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 
 @NgModule({
@@ -28,13 +33,16 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     RdvDetailsComponent,
     LoginComponent,
     VilleDetailsComponent,
-    DashboardComponent
+    DashboardComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    StoreModule.forRoot({catalogState:VilleReducer}),
+    EffectsModule.forRoot([VilleEffects]),
+    StoreDevtoolsModule.instrument()
   ],
   providers: [ ConfigService ],
   bootstrap: [AppComponent ],
