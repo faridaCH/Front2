@@ -34,16 +34,54 @@ export class PatientComponent implements OnInit {
   }
 
 
+  
+  // PatientRDV*
+  /*[
+    1 = [ rdv1, rdv2 ]
+    10 = [rdv10]
+  ]*/
+
   getPatientRdv(): void {
     this.patientRdv = [];
+    
+    // on récupère la liste des rdv afin de les trier / organiser dans le tableau this.patientRdv
+    this.rdvs.getAll().subscribe(
+      data => {
+        data.forEach( rdv => {
+          //[ rdv1 , rdv2... ]
+          if( rdv.patient != undefined && rdv.patient.id != undefined ){
+            
+            if( this.patientRdv[rdv.patient.id] == undefined ){
+              this.patientRdv[rdv.patient.id] = []
+            }
 
+            this.patientRdv[rdv.patient.id].push( rdv )
+            
+          }
+        } )
+
+        //
+        let patientTries : Array<Patient> = []
+        data.forEach( rdv => {
+          if( rdv.patient != undefined )
+            patientTries.push(rdv.patient)
+        } )
+
+        this.patients.forEach( patient => {
+          if( patient.id != undefined && this.patientRdv[patient.id] == undefined )
+            patientTries.push(patient)
+        } )
+
+        this.patients = patientTries
+
+      }
+    )
 
 
   }
 
   ngOnInit(): void {
     this.reloadPatients()
-    this.getPatientRdv()
 
     this.vs.getAll().subscribe({
       next: (data) => { this.villes = data },
@@ -52,20 +90,14 @@ export class PatientComponent implements OnInit {
   }
 
 
-  // PatientRDV*
-  /*[
-    1 = [ rdv1, rdv2 ]
-    10 = [rdv10]
-  ]*/
-
   reloadPatients() {
     console.log(this.config.httpOptions.headers)
     this.ps.getAll(this.search).subscribe(
       data => { 
         this.patients = data 
-
+        this.getPatientRdv()
         // je boucle sur les patients pour faire une req http et récupérer les rdv de chaq patient
-        data.forEach( patient => {
+        /* data.forEach( patient => {
           this.rdvs.getAll(undefined , patient.id ).subscribe(
             drdv => { 
               if( patient.id != undefined )
@@ -73,7 +105,7 @@ export class PatientComponent implements OnInit {
               }
           )
           
-        }  )
+        }  ) */
 
         console.log( this.patientRdv )
       }
