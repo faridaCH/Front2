@@ -2,6 +2,8 @@
 
     <div class="alert alert-success" *ngIf="success">Opération effectuée avec succès</div>
 
+    {{ config.httpOptions | json }}
+
     <h1>Liste des patients</h1>
     <button data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-primary" (click)="reset()">Ajouter un patient</button>
 

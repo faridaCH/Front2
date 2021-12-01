@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import { AppComponent } from '../app.component';
 import { Patient } from '../classes/patient';
 import { Ville } from '../classes/ville';
+import { ConfigService } from '../services/config.service';
 import { PatientService } from '../services/patient.service';
 import { VilleService } from '../services/ville.service';
 
@@ -12,7 +13,7 @@ import { VilleService } from '../services/ville.service';
   selector: 'app-patient',
   templateUrl: './patient.component.html',
   styleUrls: ['./patient.component.css'],
-  providers:[AppComponent]
+  providers:[ConfigService]
 })
 export class PatientComponent implements OnInit {
 
@@ -25,7 +26,8 @@ export class PatientComponent implements OnInit {
 
   @ViewChild('closebutton') closebuttonelement: any;
 
-  constructor(private vs: VilleService, private ps: PatientService) {
+  constructor(private vs: VilleService, private ps: PatientService 
+    , public config : ConfigService) {
   }
 
   ngOnInit(): void {
@@ -38,6 +40,7 @@ export class PatientComponent implements OnInit {
   }
 
   reloadPatients() {
+    console.log( this.config.httpOptions.headers )
     this.ps.getAll(this.search).subscribe(
       data => { this.patients = data }
       //, err => console.log( "Une erreur est survenue" )
