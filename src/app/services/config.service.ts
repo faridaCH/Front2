@@ -5,7 +5,7 @@ import { AuthGuard } from '../auth.guard';
 @Injectable({
   providedIn: 'root'
 })
-export class ConfigService {
+export class ConfigService {  
 
   httpOptions = {
     headers : new HttpHeaders({
