@@ -1,7 +1,5 @@
 <main class="container">
 
-
-
     <div class="alert alert-success" *ngIf="success">Opération effectuée avec succès</div>
 
     <h1>Liste des patients</h1>
@@ -56,25 +54,23 @@
 
 </main>
 
-<ng-template #patientcard let-patient="item">
+<ng-template #patientcard let-patient="item" let-rdvs="rdvsitem">
 
-    <div class="card">
+    <div class="card" *ngIf="rdvs[patient.id]">
         <div class="card-body">
             <h5 class="card-title">{{patient.prenom}} {{patient.nom}}</h5>
             <hr>
             <div class="card-text mt-3">
-                <h2 class="h5">Infos du patient</h2>
+                <h2 class="h6 bg-dark text-white p-2">Infos du patient</h2>
                 <p>
-                    <b>Email </b> : {{patient.email}}<br>
-                    <b>Tél </b> : {{patient.telephone}}<br>
+                    <b>Email </b> : <a href="mailto:{{patient.email}}">{{patient.email}}</a><br>
+                    <b>Tél </b> : <a href="tel:{{patient.telephone}}">{{patient.telephone}}</a><br>
                 </p>
 
-                2/ Question 2 -> à faire après la une
-                <h2 class="h5">Liste des RDVS</h2>
-                <p>
-                    RDV 01/12/2021 <br> RDV 01/11/2020<br> ...
-                </p>
-
+                <h2 class="h6 bg-dark text-white p-2">Liste des RDVS</h2>
+                <ul>
+                    <li *ngFor="let rdv of rdvs[patient.id]">{{ rdv.dateheure| date:'dd/MM/yyyy HH:mm' }}</li><br>
+                </ul>
             </div>
         </div>
     </div>
@@ -84,7 +80,7 @@
 <div class="container">
     <div class="row">
         <div *ngFor="let patient of patients" class="col-3 my-4">
-            <ng-container *ngTemplateOutlet="patientcard;context:{item:patient}"></ng-container>
+            <ng-container *ngTemplateOutlet="patientcard;context:{item:patient , rdvsitem : patientRdv}"></ng-container>
         </div>
     </div>
 </div>
