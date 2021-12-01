@@ -1,11 +1,11 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { map, Observable } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import { Observable } from 'rxjs';
 import { Ville } from '../classes/ville';
-import { GetAllVilleAction } from '../ngrx/villes.actions';
+
+import {map} from 'rxjs/operators';
 import { VillesStateEnum, VilleState } from '../ngrx/villes.reducer';
+import { GetAllVilleAction } from '../ngrx/villes.actions';
 import { VilleService } from '../services/ville.service';
 
 @Component({
@@ -15,89 +15,48 @@ import { VilleService } from '../services/ville.service';
 })
 export class VilleComponent implements OnInit {
 
-  villes: Array<Ville> = [];
+  villes: Array<Ville> = []
+  nom: string = ""
   ville: Ville = new Ville();
-  search: string = ""
-  errorMessage: string = ""
-  success: boolean = false
-
+  search : String = ""; 
   @ViewChild('closebutton') closebuttonelement: any;
 
-  VilleState$:Observable<VilleState>|null = null
-  readonly villeStateEnum = VillesStateEnum
+  VillesState$:Observable<VilleState>|null=null;
+  readonly VillesStateEnum= VillesStateEnum;
 
-  constructor(private vs: VilleService, private store:Store<any> ) {
-  }
+  constructor(private vs: VilleService , private store:Store<any>) { }
+
+  /* ngOnInit(): void {
+    this.updateCities()
+    console.log( this.ville ); 
+  }*/ 
 
   ngOnInit(): void {
-    //this.reloadCities();
-    this.VilleState$ = this.store.pipe(
-      map( (state) =>  state.catalogState )
-    )
-
-    this.store.dispatch( new GetAllVilleAction( {} ) )
-  }
-
-  reloadCities(): void {
-    console.log("search == " + this.search);
-
-    /* this.vs.getAll().subscribe({
-      next: (data) => { this.villes = data },
-      error: (err) => { console.log(err.error.message) }
-    }); */
-  }
-
-  clearCities(): void {
-  }
-
-  resetCity() {
-    this.ville = new Ville();
-  }
-
-  delete(id: number | undefined): void {
-
-    if (confirm("Êtes vous sur ?")) {
-      this.vs.delete(id).subscribe(
-        data => {
-          this.reloadCities();
-        }
-        //, err => console.log( "Une erreur est survenue" )
-      );
-    }
-  }
-
-  edit(id?: number) {
-    this.vs.getById(id).subscribe(
-      data => { this.ville = data }
-      //, err => console.log( "Une erreur est survenue" )
+    this.VillesState$=this.store.pipe(
+      map((state)=>  state.catalogState)
     );
+
+    this.store.dispatch(new GetAllVilleAction({}))
   }
 
-  submitCity() {
-    let obs: Observable<any>;
-    if (this.ville.id == undefined) { // Ajout
-      obs = this.vs.add(this.ville);
-    } else { // Edition
-      obs = this.vs.update(this.ville);
-    }
-
-    obs.subscribe(
-      {
-        next: () => {
-          this.reloadCities();
-          this.closebuttonelement.nativeElement.click();
-          this.success = true;
-          setTimeout(() => {                           // <<<---using ()=> syntax
-            this.success = false;
-          }, 5000);
-        },
-        error: (err) => {
-          this.errorMessage = err.error.message;
-        }
+  updateCities(): void {
+    /* this.vs.loadCities( this.search ).subscribe(
+      data => {
+        this.villes = data;
+        console.log(data);
       }
-    );
+    ); */
 
+    //this.store.dispatch(new GetAllVillesAction({}))
 
+  }
+
+  delete( id? : number ): void{
+    
+  }
+
+  edit( id?: number ): void {
+    
   }
 
 }
