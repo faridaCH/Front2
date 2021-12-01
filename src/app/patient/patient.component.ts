@@ -60,7 +60,7 @@ export class PatientComponent implements OnInit {
           }
         } )
 
-        //
+        // 
         let patientTries : Array<Patient> = []
         data.forEach( rdv => {
           if( rdv.patient != undefined )
