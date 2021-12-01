@@ -4,8 +4,6 @@
 
     <div class="alert alert-success" *ngIf="success">Opération effectuée avec succès</div>
 
-    {{ config.httpOptions | json }}
-
     <h1>Liste des patients</h1>
     <button data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-primary" (click)="reset()">Ajouter un
         patient</button>
@@ -58,16 +56,17 @@
 
 </main>
 
-<div class="container">
-    <div class="card" style="width: 18rem;">
+<ng-template #patientcard let-patient="item">
+
+    <div class="card">
         <div class="card-body">
-            <h5 class="card-title">Dupont Bonjour</h5>
+            <h5 class="card-title">{{patient.prenom}} {{patient.nom}}</h5>
             <hr>
             <div class="card-text mt-3">
                 <h2 class="h5">Infos du patient</h2>
                 <p>
-                    <b>Email </b> : bonjour@gmail.com<br>
-                    <b>Tél </b> : 01 22 33 44 55<br>
+                    <b>Email </b> : {{patient.email}}<br>
+                    <b>Tél </b> : {{patient.telephone}}<br>
                 </p>
 
                 2/ Question 2 -> à faire après la une
@@ -77,6 +76,15 @@
                 </p>
 
             </div>
+        </div>
+    </div>
+
+</ng-template>
+
+<div class="container">
+    <div class="row">
+        <div *ngFor="let patient of patients" class="col-3 my-4">
+            <ng-container *ngTemplateOutlet="patientcard;context:{item:patient}"></ng-container>
         </div>
     </div>
 </div>
