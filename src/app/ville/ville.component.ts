@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { map, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -21,6 +22,10 @@ export class VilleComponent implements OnInit {
   errorMessage: string = ""
   success: boolean = false
 
+  searchForm = new FormGroup({
+    item : new FormControl(""),
+  });
+
   @ViewChild('closebutton') closebuttonelement: any;
 
   VilleState$:Observable<VilleState>|null = null
@@ -39,7 +44,9 @@ export class VilleComponent implements OnInit {
   }
 
   reloadCities(): void {
-    console.log("search == " + this.search);
+    console.log("search == " + this.searchForm.get('item')?.value );
+
+    this.store.dispatch( new GetAllVilleAction( {payload:this.searchForm.get('item')?.value} ) )
 
     /* this.vs.getAll().subscribe({
       next: (data) => { this.villes = data },
