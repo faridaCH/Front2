@@ -4,7 +4,7 @@
     <h1 *ngIf="rdv.id != undefined">Editer un rdv</h1>
     <hr>
 
-    <form name="monForm" action="" method="post" (submit)="submit()">
+    <form name="monForm" action="" method="post" (ngSubmit)="submit()" #monForm="ngForm">
 
         <div class="form-line mb-4">
             <label class="form-label">Patient *</label>
@@ -20,11 +20,14 @@
 
         <div class="form-line mb-4">
             <label class="form-label">Date heure *</label>
-            <input class="form-control" type="datetime-local" name="dateheure" placeholder="Date heure" required [(ngModel)]="rdv.dateheure">
+            <input class="form-control" #dateheure="ngModel" type="datetime-local" name="dateheure" placeholder="Date heure" required [(ngModel)]="rdv.dateheure">
+            <div [hidden]="dateheure.pristine || dateheure.valid" class="text-danger small">
+                La date heure est obligatoire
+            </div>
         </div>
         <div class="form-line mb-4">
             <label>Durée *</label>
-            <input class="form-control" type="number" name="duree" placeholder="Durée" required [(ngModel)]="rdv.duree">
+            <input class="form-control" type="number" name="duree" placeholder="Durée" required [(ngModel)]="rdv.duree" (change)="testchange()">
         </div>
 
         <div class="form-line mb-4">
@@ -40,13 +43,12 @@
         </div>
 
         <div class="form-line mb-4">
-            <label class="form-label">Note *</label>
+            <label class="form-label">Note</label>
             <textarea class="form-control" name="note" placeholder="Votre note" style="height: 100px" [(ngModel)]="rdv.note"></textarea>
         </div>
 
-
         <div class="form-line mb-4">
-            <button type="submit" class="btn btn-primary">Envoyer</button>
+            <button type="submit" class="btn btn-primary" [disabled]="!monForm.valid">Envoyer</button>
         </div>
 
     </form>

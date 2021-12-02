@@ -28,6 +28,10 @@ export class RdvDetailsComponent implements OnInit {
     }
   }
 
+  testchange(){
+    console.log("change duree");
+  }
+
   ngOnInit(): void {
     this.ps.getAll().subscribe(
       data => this.patients = data

@@ -36,9 +36,6 @@
             <div class="p-2 text-danger"> {{state.errorMessage |json}}</div>
         </ng-container>
         <ng-container *ngSwitchCase="VilleStateEnum.LOADED" class="p-4">
-
-            {{ state.villes | json }}
-
             <table class="table table-striped" *ngIf="state.villes.length > 0">
                 <thead>
                     <tr>
@@ -57,7 +54,7 @@
                         <td>{{ ville.codePostal }}</td>
                         <td>{{ ville.pays }}</td>
                         <td>
-                            <a data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="edit(ville.id)" class="btn btn-secondary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                            <a [routerLink]="['addedit' , ville.id ]" class="btn btn-secondary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
                             <button class="btn btn-danger btn-sm ms-3" (click)="delete( ville.id )">
                                 <i class="fa fa-trash-o" aria-hidden="true"></i>
                             </button>

@@ -8,11 +8,11 @@ import { FooterComponent } from './footer/footer.component';
 import { VilleComponent } from './ville/ville.component';
 import {HttpClientModule} from '@angular/common/http';
 import { PatientComponent } from './patient/patient.component'; 
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RdvComponent } from './rdv/rdv.component';
 import { RdvDetailsComponent } from './rdv/rdv-details/rdv-details.component';
 import { LoginComponent } from './login/login.component';
-import { VilleDetailsComponent } from './ville-details/ville-details.component';
+import { VilleDetailsComponent } from './ville/ville-details/ville-details.component';
 import { ConfigService } from './services/config.service';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { StoreModule } from '@ngrx/store';
@@ -40,6 +40,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
+    ReactiveFormsModule,
     StoreModule.forRoot({catalogState:VilleReducer}),
     EffectsModule.forRoot([VilleEffects]),
     StoreDevtoolsModule.instrument()
