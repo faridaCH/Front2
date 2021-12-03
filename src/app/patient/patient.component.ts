@@ -29,7 +29,7 @@ export class PatientComponent implements OnInit {
 
   @ViewChild('closebutton') closebuttonelement: any;
 
-  constructor(private vs: VilleService, private ps: PatientService , private rdvs: RdvService
+  constructor(private vs: VilleService, public ps: PatientService , private rdvs: RdvService
     , public config: ConfigService) {
   }
 
@@ -92,6 +92,7 @@ export class PatientComponent implements OnInit {
 
   reloadPatients() {
     console.log(this.config.httpOptions.headers)
+    
     this.ps.getAll(this.search).subscribe(
       data => { 
         this.patients = data 
@@ -111,6 +112,7 @@ export class PatientComponent implements OnInit {
       }
       //, err => console.log( "Une erreur est survenue" )
     );
+    
   }
 
   reset(): void {

@@ -13,7 +13,6 @@ import { ConfigService } from '../services/config.service';
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
-  providers:[FooterComponent ]
 })
 export class LoginComponent implements OnInit {
 
